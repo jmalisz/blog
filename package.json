@@ -11,8 +11,22 @@
     "@redwoodjs/core": "2.0.0"
   },
   "eslintConfig": {
-    "extends": "@redwoodjs/eslint-config",
-    "root": true
+    "extends": [
+      "@redwoodjs/eslint-config",
+      "plugin:react/recommended"
+    ],
+    "root": true,
+    "rules": {
+      "react/jsx-sort-props": [
+        "error",
+        {
+          "callbacksLast": true,
+          "multiline": "first",
+          "reservedFirst": true,
+          "shorthandLast": true
+        }
+      ]
+    }
   },
   "engines": {
     "node": ">=14.19 <=16.x",
