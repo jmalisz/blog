@@ -4,6 +4,7 @@ import {
   FieldError,
   Label,
   TextField,
+  TextAreaField,
   Submit,
 } from '@redwoodjs/forms'
 
@@ -14,52 +15,62 @@ const PostForm = (props) => {
 
   return (
     <div className="rw-form-wrapper">
-      <Form onSubmit={onSubmit} error={props.error}>
+      <Form error={props.error} onSubmit={onSubmit}>
         <FormError
           error={props.error}
-          wrapperClassName="rw-form-error-wrapper"
-          titleClassName="rw-form-error-title"
           listClassName="rw-form-error-list"
+          titleClassName="rw-form-error-title"
+          wrapperClassName="rw-form-error-wrapper"
         />
-
         <Label
-          name="title"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
+          name="title"
         >
           Title
         </Label>
-
         <TextField
-          name="title"
-          defaultValue={props.post?.title}
           className="rw-input"
+          defaultValue={props.post?.title}
           errorClassName="rw-input rw-input-error"
+          name="title"
           validation={{ required: true }}
         />
-
-        <FieldError name="title" className="rw-field-error" />
-
+        <FieldError className="rw-field-error" name="title" />
         <Label
-          name="body"
           className="rw-label"
           errorClassName="rw-label rw-label-error"
+          name="summary"
+        >
+          Summary
+        </Label>
+        <TextField
+          className="rw-input"
+          defaultValue={props.post?.summary}
+          errorClassName="rw-input rw-input-error"
+          name="summary"
+          validation={{ required: true }}
+        />
+        <FieldError className="rw-field-error" name="summary" />
+        <FieldError className="rw-field-error" name="slug" />
+        <Label
+          className="rw-label"
+          errorClassName="rw-label rw-label-error"
+          name="body"
         >
           Body
         </Label>
-
-        <TextField
-          name="body"
-          defaultValue={props.post?.body}
+        <TextAreaField
           className="rw-input"
+          defaultValue={props.post?.body}
           errorClassName="rw-input rw-input-error"
+          name="body"
+          rows={10}
           validation={{ required: true }}
         />
-
-        <FieldError name="body" className="rw-field-error" />
-
+        <FieldError className="rw-field-error" name="body" />
         <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
+          <Submit className="rw-button rw-button-blue" disabled={props.loading}>
             Save
           </Submit>
         </div>

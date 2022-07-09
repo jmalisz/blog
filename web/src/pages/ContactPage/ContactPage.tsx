@@ -49,24 +49,23 @@ const ContactPage = () => {
 
   return (
     <>
-      <MetaTags title="Contact" description="Contact page" />
+      <MetaTags description="Contact page" title="Contact" />
       <Toaster />
-      <Form onSubmit={handleSubmit} error={error} formMethods={formMethods}>
+      <Form error={error} formMethods={formMethods} onSubmit={handleSubmit}>
         <FormError error={error} wrapperClassName="form-error" />
-        <Label name="name" errorClassName="error">
+        <Label errorClassName="error" name="name">
           Name
         </Label>
         <TextField
+          errorClassName="error"
           name="name"
           validation={{ required: true }}
-          errorClassName="error"
         />
-        <FieldError name="name" className="error" />
-        <Label name="email" errorClassName="error">
+        <FieldError className="error" name="name" />
+        <Label errorClassName="error" name="email">
           Email
         </Label>
         <TextField
-          name="email"
           validation={{
             required: true,
             pattern: {
@@ -75,17 +74,18 @@ const ContactPage = () => {
             },
           }}
           errorClassName="error"
+          name="email"
         />
-        <FieldError name="email" className="error" />
-        <Label name="message" errorClassName="error">
+        <FieldError className="error" name="email" />
+        <Label errorClassName="error" name="message">
           Message
         </Label>
         <TextAreaField
+          errorClassName="error"
           name="message"
           validation={{ required: true }}
-          errorClassName="error"
         />
-        <FieldError name="message" className="error" />
+        <FieldError className="error" name="message" />
         <Submit disabled={loading}>Save</Submit>
       </Form>
     </>

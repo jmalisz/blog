@@ -6,11 +6,13 @@ import Post from 'src/components/Post/Post'
 
 export const QUERY = gql`
   query FindPostById($id: Int!) {
-    post: post(id: $id) {
+    post: postById(id: $id) {
       id
-      title
-      body
       createdAt
+      slug
+      body
+      summary
+      title
     }
   }
 `

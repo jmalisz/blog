@@ -10,8 +10,10 @@ generator client {
 
 model Post {
   id        Int      @id @default(autoincrement())
-  body      String
+  slug      String   @unique
   createdAt DateTime @default(now())
+  body      String
+  summary   String
   title     String
 }
 
@@ -27,7 +29,6 @@ model User {
   id                  Int       @id @default(autoincrement())
   email               String    @unique
   hashedPassword      String
-  name                String?
   resetToken          String?
   resetTokenExpiresAt DateTime?
   salt                String

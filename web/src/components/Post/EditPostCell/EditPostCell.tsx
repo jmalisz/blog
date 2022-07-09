@@ -9,11 +9,12 @@ import PostForm from 'src/components/Post/PostForm'
 
 export const QUERY = gql`
   query EditPostById($id: Int!) {
-    post: post(id: $id) {
+    post: postById(id: $id) {
       id
-      title
-      body
       createdAt
+      body
+      summary
+      title
     }
   }
 `
@@ -21,9 +22,10 @@ const UPDATE_POST_MUTATION = gql`
   mutation UpdatePostMutation($id: Int!, $input: UpdatePostInput!) {
     updatePost(id: $id, input: $input) {
       id
-      title
-      body
       createdAt
+      body
+      summary
+      title
     }
   }
 `
@@ -55,7 +57,7 @@ export const Success = ({ post }: CellSuccessProps<EditPostById>) => {
         <h2 className="rw-heading rw-heading-secondary">Edit Post {post.id}</h2>
       </header>
       <div className="rw-segment-main">
-        <PostForm post={post} onSave={onSave} error={error} loading={loading} />
+        <PostForm error={error} loading={loading} post={post} onSave={onSave} />
       </div>
     </div>
   )

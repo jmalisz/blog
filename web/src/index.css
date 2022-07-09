@@ -6,11 +6,11 @@
 }
 
 .nav-link:hover {
-  background: var(--chakra-colors-gray-400);
+  background: var(--chakra-colors-teal-200)
 }
 
 .nav-link--active {
-  background: var(--chakra-colors-gray-200);
-  color: var(--chakra-colors-gray-700);
-  font-weight: 700;
+  background: var(--chakra-colors-teal-50);
+  color: var(--chakra-colors-teal-700);
+  font-weight: var(--chakra-fontWeights-bold);
 }

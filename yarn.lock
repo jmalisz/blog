@@ -8265,6 +8265,8 @@ __metadata:
   dependencies:
     "@redwoodjs/api": 2.0.0
     "@redwoodjs/graphql-server": 2.0.0
+    nodemailer: ^6.7.7
+    slugify: ^1.6.5
   languageName: unknown
   linkType: soft
 
@@ -11338,7 +11340,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.0.1, date-fns@npm:^2.16.1":
+"date-fns@npm:^2.0.1, date-fns@npm:^2.16.1, date-fns@npm:^2.28.0":
   version: 2.28.0
   resolution: "date-fns@npm:2.28.0"
   checksum: ecdacd36326e7f5f8c4f1e78ae931a8997109f1c841f5163053b866585ca899521b0e7a114eeb48a9fe5135a550787bd4bbd8baa321cded0b4d823f847889a80
@@ -18976,6 +18978,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nodemailer@npm:^6.7.7":
+  version: 6.7.7
+  resolution: "nodemailer@npm:6.7.7"
+  checksum: 4dedb9e436f8cdbb7435ad5e86a08370d6e854d3685e5b628c4f8a3093a245bce0221e745e3641aaaeb905cd23e1105d71b64bc7b5931f34c10e9015315516e9
+  languageName: node
+  linkType: hard
+
 "nodemon@npm:2.0.16":
   version: 2.0.16
   resolution: "nodemon@npm:2.0.16"
@@ -22773,6 +22782,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"slugify@npm:^1.6.5":
+  version: 1.6.5
+  resolution: "slugify@npm:1.6.5"
+  checksum: 264059d9ea7aa95e472e66d19a1042ea54c75d3f60096c2cc57af4d66c6fb6ac1d8b4672326f276f52574fac489f59cb08848bfb97e44291c7e45211acb2b185
+  languageName: node
+  linkType: hard
+
 "smart-buffer@npm:^4.2.0":
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
@@ -25221,6 +25237,7 @@ __metadata:
     "@redwoodjs/forms": 2.0.0
     "@redwoodjs/router": 2.0.0
     "@redwoodjs/web": 2.0.0
+    date-fns: ^2.28.0
     framer-motion: ^4
     prop-types: 15.8.1
     react: 17.0.2

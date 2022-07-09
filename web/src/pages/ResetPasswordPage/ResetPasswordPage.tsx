@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { useAuth } from '@redwoodjs/auth'
-import { navigate, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
 import {
   Form,
   Label,
@@ -10,9 +8,13 @@ import {
   Submit,
   FieldError,
 } from '@redwoodjs/forms'
+import { navigate, routes } from '@redwoodjs/router'
+import { MetaTags } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const ResetPasswordPage = ({ resetToken }) => {
-  const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } = useAuth()
+  const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
+    useAuth()
   const [enabled, setEnabled] = useState(true)
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const ResetPasswordPage = ({ resetToken }) => {
       }
     }
     validateToken()
-  }, [])
+  }, [resetToken, validateResetToken])
 
   const passwordRef = useRef<HTMLInputElement>()
   useEffect(() => {
@@ -70,21 +72,16 @@ const ResetPasswordPage = ({ resetToken }) => {
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
+                <Form className="rw-form-wrapper" onSubmit={onSubmit}>
                   <div className="text-left">
                     <Label
-                      name="password"
                       className="rw-label"
                       errorClassName="rw-label rw-label-error"
+                      name="password"
                     >
                       New Password
                     </Label>
                     <PasswordField
-                      name="password"
-                      autoComplete="new-password"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
-                      disabled={!enabled}
                       ref={passwordRef}
                       validation={{
                         required: {
@@ -92,9 +89,14 @@ const ResetPasswordPage = ({ resetToken }) => {
                           message: 'Password is required',
                         },
                       }}
+                      autoComplete="new-password"
+                      className="rw-input"
+                      disabled={!enabled}
+                      errorClassName="rw-input rw-input-error"
+                      name="password"
                     />
 
-                    <FieldError name="password" className="rw-field-error" />
+                    <FieldError className="rw-field-error" name="password" />
                   </div>
 
                   <div className="rw-button-group">

@@ -1,8 +1,9 @@
-import { db } from 'src/lib/db'
 import { DbAuthHandler } from '@redwoodjs/api'
 
-export const handler = async (event, context) => {
+import { db } from 'src/lib/db'
+import { sendEmail } from 'src/lib/email'
 
+export const handler = async (event, context) => {
   const forgotPasswordOptions = {
     // handler() is invoked after verifying that a user was found with the given
     // username. This is where you can send the user an email with a link to
@@ -17,6 +18,12 @@ export const handler = async (event, context) => {
     // address in a toast message so the user will know it worked and where
     // to look for the email.
     handler: (user) => {
+      sendEmail({
+        to: user.email,
+        subject: 'Password reset link',
+        html: `Hi ${user.email}. Someone requested to reset your password on my blog.<br><br> If it wasn't you, please ignore this emai. Otherwise, please click the link below.<br><a href=localhost:8910/reset-password?resetToken=${user.resetToken}> Reset password </a>`,
+      })
+
       return user
     },
 

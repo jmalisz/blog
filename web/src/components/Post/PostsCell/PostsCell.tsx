@@ -9,9 +9,11 @@ export const QUERY = gql`
   query FindPosts {
     posts {
       id
-      title
-      body
       createdAt
+      slug
+      body
+      summary
+      title
     }
   }
 `
@@ -22,7 +24,7 @@ export const Empty = () => {
   return (
     <div className="rw-text-center">
       {'No posts yet. '}
-      <Link to={routes.newPost()} className="rw-link">
+      <Link className="rw-link" to={routes.newPost()}>
         {'Create one?'}
       </Link>
     </div>

@@ -3,14 +3,14 @@ import { MetaTags } from '@redwoodjs/web'
 import ArticleCell from 'src/components/ArticleCell'
 
 interface Props {
-  id: number
+  slug: string
 }
 
-const ArticlePage = ({ id }: Props) => {
+const ArticlePage = ({ slug }: Props) => {
   return (
     <>
-      <MetaTags title="Article" description="Article page" />
-      <ArticleCell id={id} />
+      <MetaTags description="Article page" title="Article" />
+      <ArticleCell slug={slug} />
     </>
   )
 }

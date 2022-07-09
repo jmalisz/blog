@@ -1,5 +1,3 @@
-import humanize from 'humanize-string'
-
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -12,25 +10,6 @@ const DELETE_POST_MUTATION = gql`
   }
 `
 
-const formatEnum = (values: string | string[] | null | undefined) => {
-  if (values) {
-    if (Array.isArray(values)) {
-      const humanizedValues = values.map((value) => humanize(value))
-      return humanizedValues.join(', ')
-    } else {
-      return humanize(values as string)
-    }
-  }
-}
-
-const jsonDisplay = (obj) => {
-  return (
-    <pre>
-      <code>{JSON.stringify(obj, null, 2)}</code>
-    </pre>
-  )
-}
-
 const timeTag = (datetime) => {
   return (
     datetime && (
@@ -39,10 +18,6 @@ const timeTag = (datetime) => {
       </time>
     )
   )
-}
-
-const checkboxInputTag = (checked) => {
-  return <input type="checkbox" checked={checked} disabled />
 }
 
 const Post = ({ post }) => {
@@ -77,30 +52,38 @@ const Post = ({ post }) => {
               <td>{post.id}</td>
             </tr>
             <tr>
-              <th>Title</th>
-              <td>{post.title}</td>
+              <th>Created at</th>
+              <td>{timeTag(post.createdAt)}</td>
+            </tr>
+            <tr>
+              <th>Slug</th>
+              <td>{post.slug}</td>
             </tr>
             <tr>
               <th>Body</th>
               <td>{post.body}</td>
             </tr>
             <tr>
-              <th>Created at</th>
-              <td>{timeTag(post.createdAt)}</td>
+              <th>Summary</th>
+              <td>{post.summary}</td>
+            </tr>
+            <tr>
+              <th>Title</th>
+              <td>{post.title}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <nav className="rw-button-group">
         <Link
-          to={routes.editPost({ id: post.id })}
           className="rw-button rw-button-blue"
+          to={routes.editPost({ id: post.id })}
         >
           Edit
         </Link>
         <button
-          type="button"
           className="rw-button rw-button-red"
+          type="button"
           onClick={() => onDeleteClick(post.id)}
         >
           Delete

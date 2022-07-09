@@ -8,7 +8,7 @@ import ArticlePage from './ArticlePage'
 describe('ArticlePage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<ArticlePage />)
+      render(<ArticlePage slug="1" />)
     }).not.toThrow()
   })
 })

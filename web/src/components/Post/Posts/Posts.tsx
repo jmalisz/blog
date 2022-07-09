@@ -50,7 +50,7 @@ const timeTag = (datetime) => {
 }
 
 const checkboxInputTag = (checked) => {
-  return <input type="checkbox" checked={checked} disabled />
+  return <input checked={checked} type="checkbox" disabled />
 }
 
 const PostsList = ({ posts }) => {
@@ -80,9 +80,11 @@ const PostsList = ({ posts }) => {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Title</th>
-            <th>Body</th>
             <th>Created at</th>
+            <th>Slug</th>
+            <th>Body</th>
+            <th>Summary</th>
+            <th>Title</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -90,29 +92,31 @@ const PostsList = ({ posts }) => {
           {posts.map((post) => (
             <tr key={post.id}>
               <td>{truncate(post.id)}</td>
-              <td>{truncate(post.title)}</td>
-              <td>{truncate(post.body)}</td>
               <td>{timeTag(post.createdAt)}</td>
+              <td>{truncate(post.slug)}</td>
+              <td>{truncate(post.body)}</td>
+              <td>{truncate(post.summary)}</td>
+              <td>{truncate(post.title)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link
-                    to={routes.post({ id: post.id })}
-                    title={'Show post ' + post.id + ' detail'}
                     className="rw-button rw-button-small"
+                    title={'Show post ' + post.id + ' detail'}
+                    to={routes.post({ id: post.id })}
                   >
                     Show
                   </Link>
                   <Link
-                    to={routes.editPost({ id: post.id })}
-                    title={'Edit post ' + post.id}
                     className="rw-button rw-button-small rw-button-blue"
+                    title={'Edit post ' + post.id}
+                    to={routes.editPost({ id: post.id })}
                   >
                     Edit
                   </Link>
                   <button
-                    type="button"
-                    title={'Delete post ' + post.id}
                     className="rw-button rw-button-small rw-button-red"
+                    title={'Delete post ' + post.id}
+                    type="button"
                     onClick={() => onDeleteClick(post.id)}
                   >
                     Delete

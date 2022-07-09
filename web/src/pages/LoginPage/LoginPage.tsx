@@ -1,5 +1,6 @@
-import { Link, navigate, routes } from '@redwoodjs/router'
-import { useRef } from 'react'
+import { useEffect } from 'react'
+
+import { useAuth } from '@redwoodjs/auth'
 import {
   Form,
   Label,
@@ -8,10 +9,9 @@ import {
   Submit,
   FieldError,
 } from '@redwoodjs/forms'
-import { useAuth } from '@redwoodjs/auth'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
-import { useEffect } from 'react'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
@@ -21,11 +21,6 @@ const LoginPage = () => {
       navigate(routes.home())
     }
   }, [isAuthenticated])
-
-  const usernameRef = useRef<HTMLInputElement>()
-  useEffect(() => {
-    usernameRef.current.focus()
-  }, [])
 
   const onSubmit = async (data) => {
     const response = await logIn({ ...data })
@@ -50,60 +45,64 @@ const LoginPage = () => {
             <header className="rw-segment-header">
               <h2 className="rw-heading rw-heading-secondary">Login</h2>
             </header>
-
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
+                <Form
+                  className="rw-form-wrapper"
+                  config={{ mode: 'onBlur' }}
+                  onSubmit={onSubmit}
+                >
                   <Label
-                    name="username"
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
+                    name="username"
                   >
-                    Username
+                    Email
                   </Label>
                   <TextField
-                    name="username"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
                     validation={{
                       required: {
                         value: true,
-                        message: 'Username is required',
+                        message: 'Email is required',
+                      },
+                      pattern: {
+                        value: /^[^@]+@[^.]+\..+$/,
+                        message: 'Please enter a valid email address',
                       },
                     }}
+                    className="rw-input"
+                    errorClassName="rw-input rw-input-error"
+                    name="username"
                   />
-
-                  <FieldError name="username" className="rw-field-error" />
-
+                  <FieldError className="rw-field-error" name="username" />
                   <Label
-                    name="password"
                     className="rw-label"
                     errorClassName="rw-label rw-label-error"
+                    name="password"
                   >
                     Password
                   </Label>
                   <PasswordField
-                    name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    autoComplete="current-password"
                     validation={{
                       required: {
                         value: true,
                         message: 'Password is required',
                       },
                     }}
+                    autoComplete="current-password"
+                    className="rw-input"
+                    errorClassName="rw-input rw-input-error"
+                    name="password"
                   />
-
                   <div className="rw-forgot-link">
-                    <Link to={routes.forgotPassword()} className="rw-forgot-link">
+                    <Link
+                      className="rw-forgot-link"
+                      to={routes.forgotPassword()}
+                    >
                       Forgot Password?
                     </Link>
                   </div>
-
-                  <FieldError name="password" className="rw-field-error" />
-
+                  <FieldError className="rw-field-error" name="password" />
                   <div className="rw-button-group">
                     <Submit className="rw-button rw-button-blue">Login</Submit>
                   </div>
@@ -113,7 +112,7 @@ const LoginPage = () => {
           </div>
           <div className="rw-login-link">
             <span>Don&apos;t have an account?</span>{' '}
-            <Link to={routes.signup()} className="rw-link">
+            <Link className="rw-link" to={routes.signup()}>
               Sign up!
             </Link>
           </div>

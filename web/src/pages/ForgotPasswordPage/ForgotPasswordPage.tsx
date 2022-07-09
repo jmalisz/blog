@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+
 import { useAuth } from '@redwoodjs/auth'
-import { navigate, routes } from '@redwoodjs/router'
+import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
-import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
@@ -14,13 +15,8 @@ const ForgotPasswordPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef<HTMLInputElement>()
-  useEffect(() => {
-    usernameRef.current.focus()
-  }, [])
-
   const onSubmit = async (data) => {
-    const response = await forgotPassword(data.username)
+    const response = await forgotPassword(data.email)
 
     if (response.error) {
       toast.error(response.error)
@@ -28,7 +24,9 @@ const ForgotPasswordPage = () => {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
       // been invoked, let the user know how to get the link to reset their
       // password (sent in email, perhaps?)
-      toast.success('A link to reset your password was sent to ' + response.email)
+      toast.success(
+        'A link to reset your password was sent to ' + response.email
+      )
       navigate(routes.login())
     }
   }
@@ -36,7 +34,6 @@ const ForgotPasswordPage = () => {
   return (
     <>
       <MetaTags title="Forgot Password" />
-
       <main className="rw-main">
         <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
         <div className="rw-scaffold rw-login-container">
@@ -46,37 +43,50 @@ const ForgotPasswordPage = () => {
                 Forgot Password
               </h2>
             </header>
-
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
+                <Form
+                  className="rw-form-wrapper"
+                  config={{ mode: 'onBlur' }}
+                  onSubmit={onSubmit}
+                >
                   <div className="text-left">
                     <Label
-                      name="username"
                       className="rw-label"
                       errorClassName="rw-label rw-label-error"
+                      name="email"
                     >
-                      Username
+                      Email
                     </Label>
                     <TextField
-                      name="username"
+                      validation={{
+                        required: {
+                          value: true,
+                          message: 'Email is required',
+                        },
+                        pattern: {
+                          value: /^[^@]+@[^.]+\..+$/,
+                          message: 'Please enter a valid email address',
+                        },
+                      }}
                       className="rw-input"
                       errorClassName="rw-input rw-input-error"
-                      ref={usernameRef}
-                      validation={{
-                        required: true,
-                      }}
+                      name="email"
                     />
-
-                    <FieldError name="username" className="rw-field-error" />
+                    <FieldError className="rw-field-error" name="email" />
                   </div>
-
                   <div className="rw-button-group">
                     <Submit className="rw-button rw-button-blue">Submit</Submit>
                   </div>
                 </Form>
               </div>
             </div>
+          </div>
+          <div className="rw-login-link">
+            <span>Go back to </span>
+            <Link className="rw-link" to={routes.login()}>
+              login
+            </Link>
           </div>
         </div>
       </main>

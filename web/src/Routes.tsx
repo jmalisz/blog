@@ -12,28 +12,32 @@ import { Private, Router, Route, Set } from '@redwoodjs/router'
 import BlogLayout from 'src/layouts/BlogLayout'
 import PostsLayout from 'src/layouts/PostsLayout'
 
+import LoginLayout from './layouts/LoginLayout/LoginLayout'
+
 const Routes = () => {
   return (
     <Router>
-      <Route path="/login" page={LoginPage} name="login" />
-      <Route path="/signup" page={SignupPage} name="signup" />
-      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+      <Set wrap={LoginLayout}>
+        <Route name="login" page={LoginPage} path="/login" />
+        <Route name="signup" page={SignupPage} path="/signup" />
+        <Route name="forgotPassword" page={ForgotPasswordPage} path="/forgot-password" />
+        <Route name="resetPassword" page={ResetPasswordPage} path="/reset-password" />
+      </Set>
       <Private unauthenticated="home">
         <Set wrap={PostsLayout}>
-          <Route path="/admin/posts" page={PostPostsPage} name="posts" />
-          <Route path="/admin/posts/new" page={PostNewPostPage} name="newPost" />
-          <Route path="/admin/posts/{id:Int}" page={PostPostPage} name="post" />
-          <Route path="/admin/posts/{id:Int}/edit" page={PostEditPostPage} name="editPost" />
+          <Route name="newPost" page={PostNewPostPage} path="/admin/posts/new" />
+          <Route name="editPost" page={PostEditPostPage} path="/admin/posts/{id:Int}/edit" />
+          <Route name="post" page={PostPostPage} path="/admin/posts/{id:Int}" />
+          <Route name="posts" page={PostPostsPage} path="/admin/posts" />
         </Set>
       </Private>
       <Set wrap={BlogLayout}>
-        <Route path="/" page={HomePage} name="home" />
-        <Route path="/about" page={AboutPage} name="about" />
-        <Route path="/article/{id:Int}" page={ArticlePage} name="article" />
-        <Route path="/contact" page={ContactPage} name="contact" />
+        <Route name="home" page={HomePage} path="/" />
+        <Route name="about" page={AboutPage} path="/about" />
+        <Route name="article" page={ArticlePage} path="/article/{slug}" />
+        <Route name="contact" page={ContactPage} path="/contact" />
       </Set>
-      <Route notfound page={NotFoundPage} />
+      <Route page={NotFoundPage} notfound />
     </Router>
   )
 }

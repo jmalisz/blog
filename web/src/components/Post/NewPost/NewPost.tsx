@@ -33,7 +33,7 @@ const NewPost = () => {
         <h2 className="rw-heading rw-heading-secondary">New Post</h2>
       </header>
       <div className="rw-segment-main">
-        <PostForm onSave={onSave} loading={loading} error={error} />
+        <PostForm error={error} loading={loading} onSave={onSave} />
       </div>
     </div>
   )
