@@ -1,4 +1,13 @@
-import { Container } from '@chakra-ui/react'
+import {
+  Container,
+  Input,
+  useToast,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Textarea,
+  Button,
+} from '@chakra-ui/react'
 import {
   CreateContactMutation,
   CreateContactMutationVariables,
@@ -8,7 +17,6 @@ import {
   FieldError,
   Form,
   FormError,
-  Label,
   TextField,
   Submit,
   SubmitHandler,
@@ -16,7 +24,6 @@ import {
   useForm,
 } from '@redwoodjs/forms'
 import { MetaTags, useMutation } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {
@@ -33,63 +40,92 @@ interface FormValues {
 }
 
 const ContactPage = () => {
+  const toast = useToast()
+  const formMethods = useForm({ mode: 'onBlur' })
+
   const [create, { loading, error }] = useMutation<
     CreateContactMutation,
     CreateContactMutationVariables
   >(CREATE_CONTACT, {
     onCompleted: () => {
-      toast.success('Thank you for your submission!')
+      toast({
+        title: 'Thank you for your submission!',
+        description: "I'll get back to you shortly!",
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      })
       formMethods.reset()
     },
   })
-  const formMethods = useForm({ mode: 'onBlur' })
 
   const handleSubmit: SubmitHandler<FormValues> = (data) => {
     create({ variables: { input: data } })
   }
 
   return (
-    <Container display="flex" justifyContent="center" maxW="container.sm">
+    <>
       <MetaTags description="Contact page" title="Contact" />
-      <Toaster />
       <Form error={error} formMethods={formMethods} onSubmit={handleSubmit}>
-        <FormError error={error} wrapperClassName="form-error" />
-        <Label errorClassName="error" name="name">
-          Name
-        </Label>
-        <TextField
-          errorClassName="error"
-          name="name"
-          validation={{ required: true }}
-        />
-        <FieldError className="error" name="name" />
-        <Label errorClassName="error" name="email">
-          Email
-        </Label>
-        <TextField
-          validation={{
-            required: true,
-            pattern: {
-              value: /^[^@]+@[^.]+\..+$/,
-              message: 'Please enter a valid email address',
-            },
-          }}
-          errorClassName="error"
-          name="email"
-        />
-        <FieldError className="error" name="email" />
-        <Label errorClassName="error" name="message">
-          Message
-        </Label>
-        <TextAreaField
-          errorClassName="error"
-          name="message"
-          validation={{ required: true }}
-        />
-        <FieldError className="error" name="message" />
-        <Submit disabled={loading}>Save</Submit>
+        <Container
+          display="flex"
+          flexDirection="column"
+          gap="4"
+          maxW="container.sm"
+        >
+          <FormError error={error} wrapperClassName="form-error" />
+          <FormControl isInvalid={!!formMethods.getFieldState('name').error}>
+            <FormLabel htmlFor="name">Name</FormLabel>
+            <Input
+              as={TextField}
+              name="name"
+              validation={{ required: 'Name is required' }}
+            />
+            <FormErrorMessage>
+              <FieldError className="error" name="name" />
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={!!formMethods.getFieldState('email').error}>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input
+              validation={{
+                required: 'Email is required',
+                pattern: {
+                  value: /^[^@]+@[^.]+\..+$/,
+                  message: 'Please enter a valid email address',
+                },
+              }}
+              as={TextField}
+              name="email"
+            />
+            <FormErrorMessage>
+              <FieldError name="email" />
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={!!formMethods.getFieldState('message').error}>
+            <FormLabel htmlFor="message">Message</FormLabel>
+            <Textarea
+              as={TextAreaField}
+              name="message"
+              validation={{ required: 'Message is required' }}
+            />
+            <FormErrorMessage>
+              <FieldError name="message" />
+            </FormErrorMessage>
+          </FormControl>
+          <Button
+            alignSelf="flex-end"
+            as={Submit}
+            disabled={loading}
+            type="submit"
+          >
+            Send
+          </Button>
+        </Container>
       </Form>
-    </Container>
+    </>
   )
 }
 

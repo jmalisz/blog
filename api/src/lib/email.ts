@@ -12,7 +12,12 @@ apiInstance.setApiKey(
 )
 
 // Uses https://developers.sendinblue.com/docs
-export async function sendEmail({ to, subject, htmlContent }: SendSmtpEmail) {
+export async function sendEmail({
+  to,
+  subject,
+  htmlContent,
+  textContent,
+}: SendSmtpEmail) {
   const sendSmtpEmail = new SendSmtpEmail()
 
   sendSmtpEmail.sender = {
@@ -22,6 +27,7 @@ export async function sendEmail({ to, subject, htmlContent }: SendSmtpEmail) {
   sendSmtpEmail.to = to
   sendSmtpEmail.subject = subject
   sendSmtpEmail.htmlContent = htmlContent
+  sendSmtpEmail.textContent = textContent
 
   const info = await apiInstance.sendTransacEmail(sendSmtpEmail)
 

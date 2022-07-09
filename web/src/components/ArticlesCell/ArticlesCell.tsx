@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from '@chakra-ui/react'
+import { Flex, Heading, Spinner, Text } from '@chakra-ui/react'
 import type { ArticlesQuery } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -17,9 +17,9 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => <Spinner color="teal.500" size="xl" />
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => <div>Looks empty... For now :)</div>
 
 export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error.message}</div>

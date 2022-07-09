@@ -34,10 +34,13 @@ export async function createTemporaryFileDownload({
       Body: file,
       ContentType: contentType,
       ContentDisposition: contentDisposition,
+      Metadata: {
+        'Storj-Expires': '+10m',
+      },
     })
 
     const command = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: fileName })
-    const url = await getSignedUrl(s3, command)
+    const url = await getSignedUrl(s3, command, { expiresIn: 10 * 60 })
 
     return url
   } catch (error) {

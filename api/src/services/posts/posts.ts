@@ -59,6 +59,7 @@ export const generatePostPdfBySlug: MutationResolvers['generatePostPdfBySlug'] =
     const pdf = await generatePdfFromUrl(
       `http://localhost:8910/article/${slug}`
     )
+    console.log('PDF generated')
 
     const url = await createTemporaryFileDownload({
       file: pdf,
@@ -66,6 +67,7 @@ export const generatePostPdfBySlug: MutationResolvers['generatePostPdfBySlug'] =
       contentType: 'application/pdf',
       contentDisposition: 'inline',
     })
+    console.log('URL generated')
 
     return { url }
   }

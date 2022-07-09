@@ -1,4 +1,13 @@
-import { Button, Container, Flex, useToast, Link } from '@chakra-ui/react'
+import { CheckCircleIcon } from '@chakra-ui/icons'
+import {
+  Button,
+  Container,
+  Flex,
+  useToast,
+  Link,
+  Text,
+  Box,
+} from '@chakra-ui/react'
 
 import { MetaTags } from '@redwoodjs/web'
 import { useMutation } from '@redwoodjs/web'
@@ -29,12 +38,20 @@ const ArticlePage = ({ slug }: Props) => {
           <Button
             as={Link}
             colorScheme="green"
+            height="72px"
             href={url}
+            padding="12px 16px"
             width="100%"
             isExternal
             onClick={onClose}
           >
-            Your PDF is ready, click here!
+            <Flex gap="3">
+              <CheckCircleIcon boxSize="5" />
+              <Box>
+                <Text fontWeight="bold">Your PDF is ready, click here! </Text>
+                <Text>It will be available for 10 min.</Text>
+              </Box>
+            </Flex>
           </Button>
         ),
       })

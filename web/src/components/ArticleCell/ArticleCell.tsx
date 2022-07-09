@@ -1,4 +1,4 @@
-import { Heading, Text } from '@chakra-ui/react'
+import { Heading, Spinner, Text } from '@chakra-ui/react'
 import type { FindArticleQuery, FindArticleQueryVariables } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -16,7 +16,7 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => <Spinner color="teal.500" size="xl" />
 
 export const Empty = () => <div>Looks empty... For now :)</div>
 
