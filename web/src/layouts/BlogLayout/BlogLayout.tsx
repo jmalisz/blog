@@ -9,7 +9,7 @@ type BlogLayoutProps = {
 }
 
 const BlogLayout = ({ children }: BlogLayoutProps) => {
-  const { isAuthenticated, currentUser, logOut } = useAuth()
+  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
 
   return (
     <>
@@ -37,9 +37,11 @@ const BlogLayout = ({ children }: BlogLayoutProps) => {
           {isAuthenticated ? (
             <Flex alignItems="center" gap="16px">
               <span>Logged in as {currentUser.email}</span>
-              <Button as={Link} to={routes.posts()} variant="outline">
-                Admin panel
-              </Button>
+              {hasRole('admin') && (
+                <Button as={Link} to={routes.posts()} variant="outline">
+                  Admin panel
+                </Button>
+              )}
               <Button onClick={logOut}>Logout</Button>
             </Flex>
           ) : (

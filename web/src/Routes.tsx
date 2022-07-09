@@ -23,7 +23,7 @@ const Routes = () => {
         <Route name="forgotPassword" page={ForgotPasswordPage} path="/forgot-password" />
         <Route name="resetPassword" page={ResetPasswordPage} path="/reset-password" />
       </Set>
-      <Private unauthenticated="home">
+      <Private roles="admin" unauthenticated="home">
         <Set wrap={PostsLayout}>
           <Route name="newPost" page={PostNewPostPage} path="/admin/posts/new" />
           <Route name="editPost" page={PostEditPostPage} path="/admin/posts/{id:Int}/edit" />
