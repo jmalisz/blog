@@ -8,6 +8,10 @@ export const schema = gql`
     title: String!
   }
 
+  type PdfUrl {
+    url: String!
+  }
+
   type Query {
     posts: [Post!]! @skipAuth
     postById(id: Int!): Post @skipAuth
@@ -30,5 +34,6 @@ export const schema = gql`
     createPost(input: CreatePostInput!): Post! @requireAuth
     updatePost(id: Int!, input: UpdatePostInput!): Post! @requireAuth
     deletePost(id: Int!): Post! @requireAuth
+    generatePostPdfBySlug(slug: String!): PdfUrl! @skipAuth
   }
 `

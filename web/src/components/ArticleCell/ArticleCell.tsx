@@ -30,14 +30,16 @@ export const Success = ({
   article: { title, createdAt, body },
 }: CellSuccessProps<FindArticleQuery, FindArticleQueryVariables>) => {
   return (
-    <article>
-      <header>
-        <Heading color="teal.700" mb="1" size="lg">
-          {title}
-        </Heading>
-        <Text fontSize="xs">{formatDate(new Date(createdAt))}</Text>
-      </header>
-      <Text mt="6">{body}</Text>
-    </article>
+    <>
+      <article data-article>
+        <header>
+          <Heading color="teal.700" mb="1" size="lg">
+            {title}
+          </Heading>
+          <Text fontSize="xs">{formatDate(new Date(createdAt))}</Text>
+        </header>
+        <Text mt="6">{body}</Text>
+      </article>
+    </>
   )
 }

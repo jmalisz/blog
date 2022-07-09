@@ -19,9 +19,9 @@ export const handler = async (event, context) => {
     // to look for the email.
     handler: (user) => {
       sendEmail({
-        to: user.email,
+        to: [{ email: user.email }],
         subject: 'Password reset link',
-        html: `Hi ${user.email}. Someone requested to reset your password on my blog.<br><br> If it wasn't you, please ignore this emai. Otherwise, please click the link below.<br><a href=localhost:8910/reset-password?resetToken=${user.resetToken}> Reset password </a>`,
+        htmlContent: `Hi ${user.email}. Someone requested to reset your password on my blog.<br><br> If it wasn't you, please ignore this email. Otherwise, please click the link below.<br><a href=http://localhost:8910/reset-password?resetToken=${user.resetToken}> Reset password </a>`,
       })
 
       return user

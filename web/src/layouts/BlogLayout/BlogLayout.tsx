@@ -2,6 +2,7 @@ import { Box, Button, Container, Flex, Heading } from '@chakra-ui/react'
 
 import { useAuth } from '@redwoodjs/auth'
 import { Link, NavLink, routes } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/dist/toast'
 
 type BlogLayoutProps = {
   children?: React.ReactNode
@@ -12,7 +13,16 @@ const BlogLayout = ({ children }: BlogLayoutProps) => {
 
   return (
     <>
-      <Box as="header" borderBottom="1px" borderBottomColor="gray.200">
+      <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+      <Box
+        as="header"
+        background="white"
+        borderBottom="1px"
+        borderBottomColor="gray.200"
+        height="80px"
+        position="sticky"
+        top="0"
+      >
         <Container
           display="flex"
           justifyContent="space-between"
@@ -54,6 +64,8 @@ const BlogLayout = ({ children }: BlogLayoutProps) => {
           gap={4}
           h="min"
           padding={4}
+          position="sticky"
+          top="96px"
         >
           <NavLink
             activeClassName="nav-link--active"
@@ -77,9 +89,9 @@ const BlogLayout = ({ children }: BlogLayoutProps) => {
             Contact
           </NavLink>
         </Box>
-        <Container as="main" maxW="container.sm" padding="4">
+        <Box as="main" width="100%">
           {children}
-        </Container>
+        </Box>
       </Container>
     </>
   )

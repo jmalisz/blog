@@ -1,32 +1,29 @@
-import { createTransport } from 'nodemailer'
+import {
+  TransactionalEmailsApi,
+  SendSmtpEmail,
+  TransactionalEmailsApiApiKeys,
+} from 'sib-api-v3-typescript'
 
-interface Options {
-  to: string | string[]
-  subject: string
-  text?: string
-  html: string
-}
+const apiInstance = new TransactionalEmailsApi()
 
-export async function sendEmail({ to, subject, text, html }: Options) {
-  // create reusable transporter object using SendInBlue for SMTP
-  const transporter = createTransport({
-    host: 'smtp-relay.sendinblue.com',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.SEND_IN_BLUE_LOGIN,
-      pass: process.env.SEND_IN_BLUE_KEY,
-    },
-  })
+apiInstance.setApiKey(
+  TransactionalEmailsApiApiKeys.apiKey,
+  process.env.SEND_IN_BLUE_API_KEY
+)
 
-  // send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: `Jakub Maliszewski blog <nope@mail.com>`,
-    to: Array.isArray(to) ? to : [to],
-    subject,
-    text,
-    html,
-  })
+// Uses https://developers.sendinblue.com/docs
+export async function sendEmail({ to, subject, htmlContent }: SendSmtpEmail) {
+  const sendSmtpEmail = new SendSmtpEmail()
+
+  sendSmtpEmail.sender = {
+    name: 'Jakub Maliszewski blog',
+    email: 'maliszewski@blog.com',
+  }
+  sendSmtpEmail.to = to
+  sendSmtpEmail.subject = subject
+  sendSmtpEmail.htmlContent = htmlContent
+
+  const info = await apiInstance.sendTransacEmail(sendSmtpEmail)
 
   return info
 }

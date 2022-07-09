@@ -1,10 +1,10 @@
-import { Text, Image, Grid } from '@chakra-ui/react'
+import { Text, Image, Grid, Container } from '@chakra-ui/react'
 
 import { MetaTags } from '@redwoodjs/web'
 
 const AboutPage = () => {
   return (
-    <>
+    <Container display="flex" justifyContent="center" maxW="container.sm">
       <MetaTags description="About page" title="About" />
       <Grid
         gridTemplateAreas={`"cat about"
@@ -22,9 +22,9 @@ const AboutPage = () => {
           gridArea="cat"
           src="https://cataas.com/cat?width=250&height=250"
         />
-        <Text gridArea="description">A random cat photo</Text>
+        <Text gridArea="description">Have a random cat photo!</Text>
       </Grid>
-    </>
+    </Container>
   )
 }
 

@@ -2,6 +2,8 @@ import slugify from 'slugify'
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
+import { createTemporaryFileDownload } from 'src/lib/fileUploader'
+import { generatePdfFromUrl } from 'src/lib/pdfGenerator'
 
 export const posts: QueryResolvers['posts'] = () => {
   return db.post.findMany()
@@ -51,3 +53,19 @@ export const deletePost: MutationResolvers['deletePost'] = ({ id }) => {
     where: { id },
   })
 }
+
+export const generatePostPdfBySlug: MutationResolvers['generatePostPdfBySlug'] =
+  async ({ slug }) => {
+    const pdf = await generatePdfFromUrl(
+      `http://localhost:8910/article/${slug}`
+    )
+
+    const url = await createTemporaryFileDownload({
+      file: pdf,
+      fileName: `article-${slug}`,
+      contentType: 'application/pdf',
+      contentDisposition: 'inline',
+    })
+
+    return { url }
+  }

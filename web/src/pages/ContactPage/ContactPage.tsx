@@ -1,3 +1,4 @@
+import { Container } from '@chakra-ui/react'
 import {
   CreateContactMutation,
   CreateContactMutationVariables,
@@ -48,7 +49,7 @@ const ContactPage = () => {
   }
 
   return (
-    <>
+    <Container display="flex" justifyContent="center" maxW="container.sm">
       <MetaTags description="Contact page" title="Contact" />
       <Toaster />
       <Form error={error} formMethods={formMethods} onSubmit={handleSubmit}>
@@ -88,7 +89,7 @@ const ContactPage = () => {
         <FieldError className="error" name="message" />
         <Submit disabled={loading}>Save</Submit>
       </Form>
-    </>
+    </Container>
   )
 }
 
