@@ -1,15 +1,7 @@
 export async function generatePdfFromUrl(url: string) {
-  let browser
+  const puppeteer = require('puppeteer')
 
-  if (process.env.NODE_ENV !== 'production') {
-    const puppeteer = require('puppeteer')
-
-    browser = await puppeteer.launch()
-  } else {
-    const puppeteerCore = require('puppeteer-core')
-
-    browser = await puppeteerCore.launch()
-  }
+  const browser = await puppeteer.launch()
 
   const page = await browser.newPage()
 
