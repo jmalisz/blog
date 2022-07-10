@@ -41,17 +41,15 @@ export const handler = async (event: APIGatewayEvent) => {
 
     return {
       statusCode: 200,
-      body: {
-        url,
-      },
+      body: JSON.stringify({ url }),
     }
   } catch (error) {
     logger.error(error)
     return {
       statusCode: 500,
-      body: {
+      body: JSON.stringify({
         message: error.message,
-      },
+      }),
     }
   }
 }

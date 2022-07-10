@@ -3,7 +3,7 @@
   external_node_modules = ["chrome-aws-lambda"]
 
 [build]
-command = "yarn rw prisma db seed & yarn rw deploy netlify"
+command = "yarn rw deploy netlify"
 publish = "web/dist"
 functions = "api/dist/functions"
 
