@@ -65,6 +65,7 @@ const BlogLayout = ({ children }: BlogLayoutProps) => {
           flexDir="column"
           gap={4}
           h="min"
+          minWidth="120px"
           padding={4}
           position="sticky"
           top="96px"

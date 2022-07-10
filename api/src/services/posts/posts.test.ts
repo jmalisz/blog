@@ -23,14 +23,14 @@ describe('posts', () => {
   scenario('creates a post', async () => {
     const result = await createPost({
       input: {
-        slug: 'String6562722',
+        slug: 'String1221388',
         body: 'String',
         summary: 'String',
         title: 'String',
       },
     })
 
-    expect(result.slug).toEqual('String6562722')
+    expect(result.slug).toEqual('String1221388')
     expect(result.body).toEqual('String')
     expect(result.summary).toEqual('String')
     expect(result.title).toEqual('String')
@@ -40,10 +40,10 @@ describe('posts', () => {
     const original = await post({ id: scenario.post.one.id })
     const result = await updatePost({
       id: original.id,
-      input: { slug: 'String43287072' },
+      input: { slug: 'String12485202' },
     })
 
-    expect(result.slug).toEqual('String43287072')
+    expect(result.slug).toEqual('String12485202')
   })
 
   scenario('deletes a post', async (scenario: StandardScenario) => {

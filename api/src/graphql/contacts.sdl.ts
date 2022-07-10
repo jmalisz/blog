@@ -9,7 +9,7 @@ export const schema = gql`
 
   type Query {
     contacts: [Contact!]! @requireAuth
-    contact(id: Int!): Contact @requireAuth
+    contact(id: Int!): Contact! @requireAuth
   }
 
   input CreateContactInput {

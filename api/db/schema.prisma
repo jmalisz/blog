@@ -8,23 +8,6 @@ generator client {
   binaryTargets = "native"
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  slug      String   @unique
-  createdAt DateTime @default(now())
-  body      String
-  summary   String
-  title     String
-}
-
-model Contact {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String
-  message   String
-  name      String
-}
-
 model User {
   id                  Int       @id @default(autoincrement())
   email               String    @unique
@@ -33,4 +16,31 @@ model User {
   resetTokenExpiresAt DateTime?
   salt                String
   roles               String    @default("moderator")
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  Comment   Comment[]
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  body      String
+  summary   String
+  title     String
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postSlug], references: [slug])
+  createdAt DateTime @default(now())
+  postSlug  String
+  body      String
+  name      String
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String
+  message   String
+  name      String
 }

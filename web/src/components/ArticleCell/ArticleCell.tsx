@@ -5,10 +5,13 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import { formatDate } from 'src/utils/formatDate'
 
+import CommentsCell from '../CommentsCell'
+
 export const QUERY = gql`
   query FindArticleQuery($slug: String!) {
     article: postBySlug(slug: $slug) {
       id
+      slug
       body
       createdAt
       title
@@ -18,8 +21,13 @@ export const QUERY = gql`
 
 export const Loading = () => <Spinner color="teal.500" size="xl" />
 
-export const Empty = () => <div>Looks empty... For now :)</div>
-
+export const Empty = () => {
+  return (
+    <Text color="gray.500" textAlign="center">
+      This shouldn`&apos;`t be empty
+    </Text>
+  )
+}
 export const Failure = ({
   error,
 }: CellFailureProps<FindArticleQueryVariables>) => (
@@ -27,7 +35,7 @@ export const Failure = ({
 )
 
 export const Success = ({
-  article: { title, createdAt, body },
+  article: { slug, title, createdAt, body },
 }: CellSuccessProps<FindArticleQuery, FindArticleQueryVariables>) => {
   return (
     <>
@@ -36,9 +44,12 @@ export const Success = ({
           <Heading color="teal.700" mb="1" size="lg">
             {title}
           </Heading>
-          <Text fontSize="xs">{formatDate(new Date(createdAt))}</Text>
+          <Text fontSize="xs" mb="6">
+            {formatDate(new Date(createdAt))}
+          </Text>
         </header>
-        <Text mt="6">{body}</Text>
+        <Text mb="12">{body}</Text>
+        <CommentsCell postSlug={slug} />
       </article>
     </>
   )

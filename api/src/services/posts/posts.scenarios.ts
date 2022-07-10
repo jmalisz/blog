@@ -4,7 +4,7 @@ export const standard = defineScenario<Prisma.PostCreateArgs>({
   post: {
     one: {
       data: {
-        slug: 'String6120222',
+        slug: 'String1006707',
         body: 'String',
         summary: 'String',
         title: 'String',
@@ -12,7 +12,7 @@ export const standard = defineScenario<Prisma.PostCreateArgs>({
     },
     two: {
       data: {
-        slug: 'String1550278',
+        slug: 'String2092575',
         body: 'String',
         summary: 'String',
         title: 'String',

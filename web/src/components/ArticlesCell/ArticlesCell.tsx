@@ -19,8 +19,13 @@ export const QUERY = gql`
 
 export const Loading = () => <Spinner color="teal.500" size="xl" />
 
-export const Empty = () => <div>Looks empty... For now :)</div>
-
+export const Empty = () => {
+  return (
+    <Text color="gray.500" textAlign="center">
+      No articles yet
+    </Text>
+  )
+}
 export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error.message}</div>
 )

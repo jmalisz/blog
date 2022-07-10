@@ -103,7 +103,6 @@ const ContactPage = () => {
               <FieldError name="email" />
             </FormErrorMessage>
           </FormControl>
-
           <FormControl isInvalid={!!formMethods.getFieldState('message').error}>
             <FormLabel htmlFor="message">Message</FormLabel>
             <Textarea

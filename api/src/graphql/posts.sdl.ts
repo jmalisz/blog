@@ -1,6 +1,7 @@
 export const schema = gql`
   type Post {
     id: Int!
+    Comment: [Comment]
     slug: String!
     createdAt: DateTime!
     body: String!
