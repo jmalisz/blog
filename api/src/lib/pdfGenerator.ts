@@ -1,22 +1,15 @@
 export async function generatePdfFromUrl(url: string) {
-  console.log(process.env.NODE_ENV)
-
   let browser
 
   if (process.env.NODE_ENV !== 'production') {
-    puppeteer = await import('puppeteer')
+    const puppeteer = require('puppeteer')
 
     browser = await puppeteer.launch()
   } else {
-    chromium = await import('@sparticuz/chrome-aws-lambda')
+    const chromium = require('chrome-aws-lambda')
 
     browser = await chromium.puppeteer.launch({
-      args: [
-        ...chromium.args,
-        '--disable-features=AudioServiceOutOfProcess',
-        '--disable-gpu',
-        '--disable-software-rasterize',
-      ],
+      args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
       headless: chromium.headless,
