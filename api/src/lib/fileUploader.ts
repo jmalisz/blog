@@ -9,8 +9,8 @@ const s3 = new S3({
   endpoint: ENDPOINT,
   region: REGION,
   credentials: {
-    accessKeyId: process.env.REDWOOD_ENV_STORJ_BUCKET_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REDWOOD_ENV_STORJ_BUCKET_ACCESS_KEY_SECRET,
+    accessKeyId: process.env.STORJ_BUCKET_ACCESS_KEY_ID,
+    secretAccessKey: process.env.STORJ_BUCKET_ACCESS_KEY_SECRET,
   },
 })
 
