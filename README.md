@@ -1,6 +1,6 @@
 # README
 
-Welcome to [RedwoodJS](https://redwoodjs.com)!
+Welcome to [RedwoodJS](https://redwoodjs.com)! 
 
 > **Prerequisites**
 >
