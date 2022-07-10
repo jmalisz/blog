@@ -1,9 +1,9 @@
 import slugify from 'slugify'
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
+import { createTemporaryFileDownload } from 'src/functions/createTemporaryFileDownload'
+import { generatePdfFromUrl } from 'src/functions/generatePdfFromUrl'
 import { db } from 'src/lib/db'
-import { createTemporaryFileDownload } from 'src/lib/fileUploader'
-import { generatePdfFromUrl } from 'src/lib/pdfGenerator'
 
 export const posts: QueryResolvers['posts'] = () => {
   return db.post.findMany()
