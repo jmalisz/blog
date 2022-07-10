@@ -62,7 +62,7 @@ const CommentModal = ({ postSlug, isOpen, onClose }: CommentModalProps) => {
         isClosable: true,
         position: 'top',
       })
-      formMethods.reset()
+      onCloseWrapper()
     },
   })
 
@@ -73,7 +73,6 @@ const CommentModal = ({ postSlug, isOpen, onClose }: CommentModalProps) => {
 
   const handleSubmit: SubmitHandler<FormValues> = (formData) => {
     createComment({ variables: { input: { postSlug, ...formData } } })
-    onCloseWrapper()
   }
 
   return (
@@ -90,7 +89,7 @@ const CommentModal = ({ postSlug, isOpen, onClose }: CommentModalProps) => {
             <Button mr="3" variant="outline" onClick={onCloseWrapper}>
               Close
             </Button>
-            <Button as={Submit} disabled={loading} type="submit">
+            <Button as={Submit} isLoading={loading} type="submit">
               Submit
             </Button>
           </ModalFooter>

@@ -28,39 +28,52 @@ export default async () => {
       },
     ]
 
+    console.info('')
     for (const post of POSTS) {
       await db.post.upsert({
-        where: { id: post.id },
         create: {
           slug: post.slug,
           summary: post.summary,
           title: post.title,
           body: post.body,
         },
-        update: {},
+        update: {
+          slug: post.slug,
+          summary: post.summary,
+          title: post.title,
+          body: post.body,
+        },
+        where: { id: post.id },
       })
 
-      console.log(`  Seeded "${post.title}"`)
+      console.log(`Seeded post: "${post.title}"`)
     }
 
     // create an admin user
     await db.user.upsert({
-      where: { id: 1 },
       create: {
         id: 1,
         email: 'admin@admin.com',
         hashedPassword:
           'ad9563042fe9f154419361eeeb775d8a12f3975a3722953fd8e326dd108d5645',
         salt: '1c99de412b219e9abf4665293211adce',
+        roles: 'admin',
       },
-      update: {},
+      update: {
+        id: 1,
+        email: 'admin@admin.com',
+        hashedPassword:
+          'ad9563042fe9f154419361eeeb775d8a12f3975a3722953fd8e326dd108d5645',
+        salt: '1c99de412b219e9abf4665293211adce',
+        roles: 'admin',
+      },
+      where: { id: 1 },
     })
 
     console.info('')
-    console.info('  Seeded admin user:')
-    console.info('')
-    console.info('    Email: admin@admin.com')
-    console.info('    Password: admin')
+    console.info('Seeded admin user:')
+    console.info('Email: admin@admin.com')
+    console.info('Password: admin')
     console.info('')
   } catch (err) {
     console.error('Seeding failed: ', err)

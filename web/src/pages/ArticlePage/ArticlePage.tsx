@@ -11,6 +11,7 @@ import {
   Box,
   useDisclosure,
 } from '@chakra-ui/react'
+import axios from 'axios'
 
 import { MetaTags } from '@redwoodjs/web'
 
@@ -30,12 +31,9 @@ const ArticlePage = ({ slug }: Props) => {
   const downloadArticlePdf = async () => {
     try {
       setIsLoading(true)
-      const url = await fetch(
-        'http://localhost:8910/.netlify/functions/downloadArticlePdf',
-        {
-          method: 'POST',
-          body: JSON.stringify({ slug }),
-        }
+      const { data } = await axios.post(
+        '.netlify/functions/downloadArticlePdf',
+        { slug }
       )
 
       toast({
@@ -46,7 +44,7 @@ const ArticlePage = ({ slug }: Props) => {
             as={Link}
             colorScheme="green"
             height="72px"
-            href={url}
+            href={data.url}
             padding="12px 16px"
             width="100%"
             isExternal
@@ -80,7 +78,7 @@ const ArticlePage = ({ slug }: Props) => {
     <Flex>
       <MetaTags description="Article page" title="Article" />
       <CommentModal isOpen={isOpen} postSlug={slug} onClose={onClose} />
-      <Container display="flex" justifyContent="center" maxW="container.sm">
+      <Container maxW="container.sm">
         <ArticleCell slug={slug} />
       </Container>
       <Flex gap="4">
@@ -91,7 +89,7 @@ const ArticlePage = ({ slug }: Props) => {
           isLoading={isLoading}
           position="sticky"
           top="96px"
-          onClick={downloadArticlePdf}
+          onClick={() => downloadArticlePdf()}
         >
           Generate PDF
         </Button>

@@ -1,8 +1,16 @@
-import chromium from '@sparticuz/chrome-aws-lambda'
-
 export async function generatePdfFromUrl(url: string) {
-  try {
-    const browser = await chromium.puppeteer.launch({
+  console.log(process.env.NODE_ENV)
+
+  let browser
+
+  if (process.env.NODE_ENV !== 'production') {
+    puppeteer = await import('puppeteer')
+
+    browser = await puppeteer.launch()
+  } else {
+    chromium = await import('@sparticuz/chrome-aws-lambda')
+
+    browser = await chromium.puppeteer.launch({
       args: [
         ...chromium.args,
         '--disable-features=AudioServiceOutOfProcess',
@@ -13,36 +21,33 @@ export async function generatePdfFromUrl(url: string) {
       executablePath: await chromium.executablePath,
       headless: chromium.headless,
     })
+  }
 
-    console.log('test')
-    const page = await browser.newPage()
+  const page = await browser.newPage()
 
-    await page.goto(url, { waitUntil: 'networkidle0' })
+  await page.goto(url, { waitUntil: 'networkidle0' })
 
-    //To reflect CSS used for screens instead of print
-    await page.emulateMediaType('screen')
+  //To reflect CSS used for screens instead of print
+  await page.emulateMediaType('screen')
 
-    // Get just article from page
-    const element = await page.$('[data-article]')
-    await page.evaluate((el) => {
-      document.body.innerHTML = `
+  // Get just article from page
+  const element = await page.$('[data-article]')
+  await page.evaluate((el) => {
+    document.body.innerHTML = `
     <div>
       ${el.outerHTML}
     </div>
   `
-    }, element)
+  }, element)
 
-    const pdf = await page.pdf({
-      margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
-      printBackground: true,
-      format: 'A4',
-    })
+  const pdf = await page.pdf({
+    margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
+    printBackground: true,
+    format: 'A4',
+  })
 
-    // Close the browser instance
-    await browser.close()
+  // Close the browser instance
+  await browser.close()
 
-    return pdf
-  } catch (error) {
-    console.error(error)
-  }
+  return pdf
 }

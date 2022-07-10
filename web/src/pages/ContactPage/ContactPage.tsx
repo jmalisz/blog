@@ -49,7 +49,7 @@ const ContactPage = () => {
   >(CREATE_CONTACT, {
     onCompleted: () => {
       toast({
-        title: 'Thank you for your submission!',
+        title: 'Thank you for your message!',
         description: "I'll get back to you shortly!",
         status: 'success',
         duration: 4000,
@@ -117,7 +117,7 @@ const ContactPage = () => {
           <Button
             alignSelf="flex-end"
             as={Submit}
-            disabled={loading}
+            isLoading={loading}
             type="submit"
           >
             Send

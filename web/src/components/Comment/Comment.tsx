@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Button, Flex, Heading, Text, useToast } from '@chakra-ui/react'
 
 import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
@@ -22,14 +22,25 @@ interface CommentProps {
 }
 
 const Comment = ({ id, createdAt, name, body }: CommentProps) => {
+  const toast = useToast()
   const { hasRole } = useAuth()
-  const [deleteComment] = useMutation(DELETE_COMMENT, {
+
+  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
     refetchQueries: ({ data }) => [
       {
         query: CommentsQuery,
         variables: { postSlug: data.deleteComment.postSlug },
       },
     ],
+    onCompleted: () => {
+      toast({
+        title: 'Post deleted!',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      })
+    },
   })
 
   const moderate = () => {
@@ -50,29 +61,10 @@ const Comment = ({ id, createdAt, name, body }: CommentProps) => {
       </Text>
       <Text>{body}</Text>
       {hasRole(['admin', 'moderator']) && (
-        <Button alignSelf="flex-end" onClick={moderate}>
+        <Button alignSelf="flex-end" isLoading={loading} onClick={moderate}>
           Delete
         </Button>
       )}
-      {/* <div className="bg-gray-200 p-8 rounded-lg relative">
-      <header className="flex justify-between">
-        <h2 className="font-semibold text-gray-700">{name}</h2>
-        <time className="text-xs text-gray-500" dateTime={createdAt}>
-          {formatDate(new Date(createdAt))}
-        </time>
-      </header>
-      <p className="text-sm mt-2">{body}</p>
-      {hasRole(['admin', 'moderator']) && (
-        <button
-          className="absolute bottom-2 right-2 bg-red-500 text-xs rounded text-white px-2 py-1"
-          data-testid="commentDeleteButton"
-          type="button"
-          onClick={moderate}
-        >
-          Delete
-        </button>
-      )}
-    </div> */}
     </Flex>
   )
 }

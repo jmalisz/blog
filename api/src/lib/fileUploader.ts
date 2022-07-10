@@ -27,23 +27,19 @@ export async function createTemporaryFileDownload({
   contentType,
   contentDisposition,
 }: createTemporaryFileDownloadProps) {
-  try {
-    await s3.putObject({
-      Bucket: BUCKET_NAME,
-      Key: fileName,
-      Body: file,
-      ContentType: contentType,
-      ContentDisposition: contentDisposition,
-      Metadata: {
-        'Storj-Expires': '+10m',
-      },
-    })
+  await s3.putObject({
+    Bucket: BUCKET_NAME,
+    Key: fileName,
+    Body: file,
+    ContentType: contentType,
+    ContentDisposition: contentDisposition,
+    Metadata: {
+      'Storj-Expires': '+10m',
+    },
+  })
 
-    const command = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: fileName })
-    const url = await getSignedUrl(s3, command, { expiresIn: 10 * 60 })
+  const command = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: fileName })
+  const url = await getSignedUrl(s3, command, { expiresIn: 10 * 60 })
 
-    return url
-  } catch (error) {
-    console.error(error)
-  }
+  return url
 }

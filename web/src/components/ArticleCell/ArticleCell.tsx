@@ -1,4 +1,4 @@
-import { Heading, Spinner, Text } from '@chakra-ui/react'
+import { Flex, Heading, Spinner, Text } from '@chakra-ui/react'
 import type { FindArticleQuery, FindArticleQueryVariables } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -19,7 +19,11 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <Spinner color="teal.500" size="xl" />
+export const Loading = () => (
+  <Flex justifyContent="center">
+    <Spinner color="teal.500" margin="auto" size="xl" />
+  </Flex>
+)
 
 export const Empty = () => {
   return (

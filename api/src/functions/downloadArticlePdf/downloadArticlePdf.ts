@@ -21,14 +21,15 @@ import { generatePdfFromUrl } from 'src/lib/pdfGenerator'
  */
 
 export const handler = async (event: APIGatewayEvent) => {
-  logger.info('Invoked downloadArticlePdf function')
-
   try {
+    logger.info('Invoked downloadArticlePdf function')
+
     const { slug } = JSON.parse(event.body)
 
     const pdf = await generatePdfFromUrl(
       `http://localhost:8910/article/${slug}`
     )
+    logger.info('Created PDF')
 
     const url = await createTemporaryFileDownload({
       file: pdf,
@@ -36,20 +37,21 @@ export const handler = async (event: APIGatewayEvent) => {
       contentType: 'application/pdf',
       contentDisposition: 'inline',
     })
+    logger.info(`Created URL: ${url}`)
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
+      body: {
+        url,
       },
-      body: JSON.stringify({
-        data: url,
-      }),
     }
   } catch (error) {
     logger.error(error)
     return {
       statusCode: 500,
+      body: {
+        message: error.message,
+      },
     }
   }
 }

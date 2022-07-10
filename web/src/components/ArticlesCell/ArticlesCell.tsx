@@ -17,7 +17,11 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <Spinner color="teal.500" size="xl" />
+export const Loading = () => (
+  <Flex justifyContent="center">
+    <Spinner color="teal.500" margin="auto" size="xl" />
+  </Flex>
+)
 
 export const Empty = () => {
   return (
