@@ -1,9 +1,12 @@
-import puppeteer from 'puppeteer'
+import chromium from 'chrome-aws-lambda'
 
 export async function generatePdfFromUrl(url: string) {
   try {
-    const browser = await puppeteer.launch({
-      executablePath: '/bin/google-chrome',
+    const browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
     })
     const page = await browser.newPage()
 

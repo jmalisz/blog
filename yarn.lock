@@ -9422,7 +9422,9 @@ __metadata:
     "@aws-sdk/s3-request-presigner": ^3.121.0
     "@redwoodjs/api": 2.0.0
     "@redwoodjs/graphql-server": 2.0.0
+    chrome-aws-lambda: ^10.1.0
     puppeteer: ^15.3.2
+    puppeteer-core: ^15.3.2
     sib-api-v3-typescript: ^2.2.2
     slugify: ^1.6.5
   languageName: unknown
@@ -11431,6 +11433,17 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 594754e1303672171cc04e50f6c398ae16128eb134a88f801bf5354fd96f205320f23536a045d9abd8b51024a149696e51231565891d4efdab8846021ecf88e6
+  languageName: node
+  linkType: hard
+
+"chrome-aws-lambda@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "chrome-aws-lambda@npm:10.1.0"
+  dependencies:
+    lambdafs: ^2.0.3
+  peerDependencies:
+    puppeteer-core: ^10.1.0
+  checksum: 968efb72640a99c0648cdf96f31260f07fcb3a6231ad8dec45bcd61f4e07e6f7f47cdbbc7fd91e34cd35632549eeec61e91845b47ee31ba9a0a1b4e2057b2b50
   languageName: node
   linkType: hard
 
@@ -19022,6 +19035,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lambdafs@npm:^2.0.3":
+  version: 2.1.1
+  resolution: "lambdafs@npm:2.1.1"
+  dependencies:
+    tar-fs: "*"
+  bin:
+    lambdafs: bin/brotli.js
+  checksum: eec9780fb2e34376c31a6c0c6d2ac2f8cc664e48f3531304bb5286018696c465403729bf1a1b42e9f1fef617959948048042af9f64205cfe75e703a06f07915a
+  languageName: node
+  linkType: hard
+
 "language-subtag-registry@npm:~0.3.2":
   version: 0.3.22
   resolution: "language-subtag-registry@npm:0.3.22"
@@ -22658,6 +22682,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"puppeteer-core@npm:^15.3.2":
+  version: 15.3.2
+  resolution: "puppeteer-core@npm:15.3.2"
+  dependencies:
+    cross-fetch: 3.1.5
+    debug: 4.3.4
+    devtools-protocol: 0.0.1011705
+    extract-zip: 2.0.1
+    https-proxy-agent: 5.0.1
+    pkg-dir: 4.2.0
+    progress: 2.0.3
+    proxy-from-env: 1.1.0
+    rimraf: 3.0.2
+    tar-fs: 2.1.1
+    unbzip2-stream: 1.4.3
+    ws: 8.8.0
+  checksum: 445cccda5775988e697ab564c558dfe659d98e55269e749c0ffd3247c16af532f1e8c3dde240415544c411c6bfaaf8a2cec09468e3db552a08bcadc47612d635
+  languageName: node
+  linkType: hard
+
 "puppeteer@npm:^15.3.2":
   version: 15.3.2
   resolution: "puppeteer@npm:15.3.2"
@@ -25468,7 +25512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar-fs@npm:2.1.1":
+"tar-fs@npm:*, tar-fs@npm:2.1.1":
   version: 2.1.1
   resolution: "tar-fs@npm:2.1.1"
   dependencies:
