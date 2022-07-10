@@ -19,11 +19,6 @@ import './index.css'
 
 axios.defaults.baseURL = window.location.origin
 axios.defaults.timeout = 10 * 1000
-// const instance = axios.create({
-//   baseURL: window.location.origin,
-//   timeout: 10 * 1000,
-//   headers: {'X-Custom-Header': 'foobar'}
-// });
 
 const extendedChakraTheme = extendTheme(
   {
