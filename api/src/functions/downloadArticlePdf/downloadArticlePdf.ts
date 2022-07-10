@@ -1,0 +1,55 @@
+import type { APIGatewayEvent } from 'aws-lambda'
+
+import { createTemporaryFileDownload } from 'src/lib/fileUploader'
+import { logger } from 'src/lib/logger'
+import { generatePdfFromUrl } from 'src/lib/pdfGenerator'
+/**
+ * The handler function is your code that processes http request events.
+ * You can use return and throw to send a response or error, respectively.
+ *
+ * Important: When deployed, a custom serverless function is an open API endpoint and
+ * is your responsibility to secure appropriately.
+ *
+ * @see {@link https://redwoodjs.com/docs/serverless-functions#security-considerations|Serverless Function Considerations}
+ * in the RedwoodJS documentation for more information.
+ *
+ * @typedef { import('aws-lambda').APIGatewayEvent } APIGatewayEvent
+ * @typedef { import('aws-lambda').Context } Context
+ * @param { APIGatewayEvent } event - an object which contains information from the invoker.
+ * @param { Context } context - contains information about the invocation,
+ * function, and execution environment.
+ */
+
+export const handler = async (event: APIGatewayEvent) => {
+  logger.info('Invoked downloadArticlePdf function')
+
+  try {
+    const { slug } = JSON.parse(event.body)
+
+    const pdf = await generatePdfFromUrl(
+      `http://localhost:8910/article/${slug}`
+    )
+
+    const url = await createTemporaryFileDownload({
+      file: pdf,
+      fileName: `article-${slug}`,
+      contentType: 'application/pdf',
+      contentDisposition: 'inline',
+    })
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: url,
+      }),
+    }
+  } catch (error) {
+    logger.error(error)
+    return {
+      statusCode: 500,
+    }
+  }
+}

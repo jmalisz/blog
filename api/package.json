@@ -7,7 +7,7 @@
     "@aws-sdk/s3-request-presigner": "^3.121.0",
     "@redwoodjs/api": "2.0.0",
     "@redwoodjs/graphql-server": "2.0.0",
-    "chrome-aws-lambda": "^10.1.0",
+    "@sparticuz/chrome-aws-lambda": "^14.4.1",
     "puppeteer-core": "^15.3.2",
     "sib-api-v3-typescript": "^2.2.2",
     "slugify": "^1.6.5"

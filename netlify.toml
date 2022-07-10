@@ -1,3 +1,7 @@
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["chrome-aws-lambda"]
+
 [build]
 command = "yarn rw deploy netlify"
 publish = "web/dist"

@@ -1,13 +1,20 @@
-import chromium from 'chrome-aws-lambda'
+import chromium from '@sparticuz/chrome-aws-lambda'
 
 export async function generatePdfFromUrl(url: string) {
   try {
     const browser = await chromium.puppeteer.launch({
-      args: chromium.args,
+      args: [
+        ...chromium.args,
+        '--disable-features=AudioServiceOutOfProcess',
+        '--disable-gpu',
+        '--disable-software-rasterize',
+      ],
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
       headless: chromium.headless,
     })
+
+    console.log('test')
     const page = await browser.newPage()
 
     await page.goto(url, { waitUntil: 'networkidle0' })

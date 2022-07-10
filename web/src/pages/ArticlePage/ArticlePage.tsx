@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import {
   Button,
@@ -11,29 +13,31 @@ import {
 } from '@chakra-ui/react'
 
 import { MetaTags } from '@redwoodjs/web'
-import { useMutation } from '@redwoodjs/web'
 
 import ArticleCell from 'src/components/ArticleCell'
 import CommentModal from 'src/components/CommentModal/CommentModal'
-
-const GENERATE_PDF_MUTATION = gql`
-  mutation GeneratePostPdfBySlugMutation($slug: String!) {
-    generatePostPdfBySlug(slug: $slug) {
-      url
-    }
-  }
-`
 
 interface Props {
   slug: string
 }
 
 const ArticlePage = ({ slug }: Props) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [generatePdf, { loading }] = useMutation(GENERATE_PDF_MUTATION, {
-    onCompleted: ({ generatePostPdfBySlug: { url } }) => {
+  const downloadArticlePdf = async () => {
+    try {
+      setIsLoading(true)
+      const url = await fetch(
+        'http://localhost:8910/.netlify/functions/downloadArticlePdf',
+        {
+          method: 'POST',
+          body: JSON.stringify({ slug }),
+        }
+      )
+
       toast({
         position: 'top',
         duration: null,
@@ -58,18 +62,19 @@ const ArticlePage = ({ slug }: Props) => {
           </Button>
         ),
       })
-    },
-    onError: (error) => {
+    } catch (err) {
       toast({
         position: 'top',
         title: 'PDF generation failed',
-        description: error,
+        description: err,
         status: 'error',
         duration: null,
         isClosable: true,
       })
-    },
-  })
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <Flex>
@@ -83,10 +88,10 @@ const ArticlePage = ({ slug }: Props) => {
           Add comment
         </Button>
         <Button
-          isLoading={loading}
+          isLoading={isLoading}
           position="sticky"
           top="96px"
-          onClick={() => generatePdf({ variables: { slug } })}
+          onClick={downloadArticlePdf}
         >
           Generate PDF
         </Button>
